@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500&family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap"
+        rel="stylesheet" />
+
+    <!---resources files ---->
+    <title>Tenant form</title>
+</head>
+
+<body>
+    <form class="form-detail" action="/reg" method="post">
+        <h2>Register Account Form</h2>
+        <div class="form-row">
+            <label for="full-name">Full Name</label>
+            <input type="text" name="full_name" id="full-name"
+                class="input-text" placeholder="Full Name" required />
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="form-row">
+            <label for="username">UserName</label>
+            <input type="text" name="username" id="username"
+                class="input-text" placeholder="User Name" required />
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="form-row">
+            <label for="your-email">Your Email</label>
+            <input type="text" name="email" id="your-email"
+                class="input-text" placeholder="Your Email" />
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="form-row">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"
+                class="input-text" placeholder="Your Password" required />
+            <i class="fas fa-lock"></i>
+        </div>
+        <div class="form-row">
+            <label for="confirmpassword">Confirm Password</label>
+            <input type="password" name="confirmpassword" id="Confirm Your Password"
+             class="input-text" placeholder="Confirm Password"
+                required />
+            <i class="fas fa-lock"></i>
+        </div>
+        <div class="form-row-last">
+            <input type="submit" name="register" class="register" value="Register" />
+        </div>
+    </form>
+    <a href="/">Go back </a>
+</body>
+
+</html>
