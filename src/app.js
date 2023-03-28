@@ -46,9 +46,11 @@ app.post("/reg", async (req, res) => {
       const password = req.body.password;
       const confirmpassword = req.body.confirmpassword;
       if (password != confirmpassword) {
-        return res.status(400).send("Password not matched");
+        res.render('reg', { errorMessage:"Password not matched" });
       }
-  
+      else{
+
+      
       // create temporary user details
       const tempRegDetail = new Reg({
         full_name: req.body.full_name,
@@ -86,6 +88,7 @@ app.post("/reg", async (req, res) => {
       req.session.tempRegDetail = tempRegDetail;
       console.log(req.session.tempRegDetail)
       res.render("login", { successMessage: "Check your email to verify your account." });
+    }
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
