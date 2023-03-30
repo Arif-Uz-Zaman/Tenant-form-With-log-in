@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 require("./db/connect");
 const UserDetail=require("./models/userDetails")
 const Reg =require("./models/reg")
+const pay =require("./models/payment")
 const { json }=require("express")
 
 const port =process.env.PORT || 3000;
@@ -146,6 +147,7 @@ app.post("/", async(req, res) => {
         const username=req.body.username
         const password=req.body.password
 
+        req.session.username = username;
         // usermail= await RegisterdUser.findOne({email:email})
         userRecord=await Reg.findOne({username:username})
       
@@ -243,11 +245,14 @@ app.post("/userdetail", async(req, res) => {
 })
 
 app.get("/logout", (req, res) => {
-    // Perform any logout logic if required
-    // ...
-  
-    res.redirect("/");
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
   });
+});
   
 
 app.listen(port, () => {
@@ -255,5 +260,51 @@ app.listen(port, () => {
 })
 
 
+app.get("/payment", (req, res) => {
+  const username = req.session.username;
+  res.render("payment",{username: username})
+})
 
-  
+
+app.post("/payment", async(req, res) => {
+  const username = req.session.username;
+  try{
+      const currentDate = new Date();
+
+      const payment_Detail=new pay({
+        amount:req.body.amount,
+        username:req.body.username,
+        cardusername:req.body.cardusername,
+        cardNumber:req.body.cardNumber,
+        expirationMonth:req.body.expirationMonth,
+        expirationYear:req.body.expirationYear,
+        cvv:req.body.cvv,
+        date:currentDate,
+
+      })
+
+      const details=await payment_Detail.save()
+      
+      res.status(201).render("payment", { successMessage: "Payment submitted successfully!",username: username })
+
+
+
+  }
+  catch(error){{
+      res.status(400).send(error)
+  }}
+})
+
+app.get('/paymenthistory', async (req, res) => {
+  try {
+    // Retrieve payment history from the database
+    const payments = await pay.find({ username: req.session.username });
+
+    // Render the payment history page and pass in the payment data
+    res.render('paymenthistory', { payments });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error retrieving payment history');
+  }
+});
+
