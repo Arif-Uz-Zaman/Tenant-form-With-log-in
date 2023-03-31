@@ -129,7 +129,7 @@ app.post("/reg", async (req, res) => {
       // delete tempRegDetail from session
       delete req.session.tempRegDetail;
   
-      res.send("Your email has been verified successfully.");
+      res.render("login", { successMessage: "Your email has been verified successfully."});
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
